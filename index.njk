@@ -3,47 +3,43 @@
 {% block title %}It does work{% endblock %}
 
 {% block content %}
-  <div class="fixed inset-0 flex justify-center items-center">
+  <div class="fixed inset-0 flex flex-col justify-center items-center">
     <div>
       <span class="text-change">Good design</span><br/>
       <span class="change">is<br/>as little design<br/>as possible</span><br/>
       <span x-data="{message:'🤖 Hello World 🤓'}" x-text="message"></span>
     </div>
     <div>
-      <button>Log In</button>
-      <button>Sign Up</button>
+      <button class="border-2 border-red-500 rounded-lg hover:text-white hover:bg-red-500">Log In</button>
+      <button class="border-2 border-red-500 rounded-lg hover:text-white hover:bg-red-500">Sign Up</button>
     </div>
 
     <div>
       <div >
-        <p>Free Content</p>
-        <div></div>
+        <p class="text-red-500 font-semibold">Free Content</p>
+        <p>The first three chapters can be accessed&nbsp;<a href="" class="hover:text-white hover:bg-red-500">here</a></p>
       </div>
       <div>
-        <p>Pro Content</p>
-        <div></div>
-      </div>
-      <div >
-        <p>Premium Content</p>
-        <div></div>
+        <p class="text-red-500 font-semibold">Pro Content</p>
+        <p>The remainder of the saga can be accessed&nbsp;<a href="" class="hover:text-white hover:bg-red-500">here</a>with a paid subscription.</p>
       </div>
   </div>
 
-+ <script
-+   type="text/javascript"
-+   src="https://identity.netlify.com/v1/netlify-identity-widget.js"
-+ ></script>
-+
-+ <script>
-+   const button1 = document.getElementById('left');
-+   const button2 = document.getElementById('right');
-+   
-+   const login = () => netlifyIdentity.open('login');
-+   const signup = () => netlifyIdentity.open('signup');
-+   
-+   // by default, add login and signup functionality
-+   button1.addEventListener('click', login);
-+   button2.addEventListener('click', signup);
-+ </script>
-  </div>
+<script
+   type="text/javascript"
+   src="https://identity.netlify.com/v1/netlify-identity-widget.js"
+></script>
+
+<script>
+  const button1 = document.getElementById('left');
+  const button2 = document.getElementById('right');
+  
+  const login = () => netlifyIdentity.open('login');
+  const signup = () => netlifyIdentity.open('signup');
+  
+  // by default, add login and signup functionality
+  button1.addEventListener('click', login);
+  button2.addEventListener('click', signup);
+</script>
+
 {% endblock %}
