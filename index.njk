@@ -1,6 +1,6 @@
 {% extends "_includes/default.njk" %}
 
-{% block title %}It does work{% endblock %}
+{% block title %}The Wormwood Saga{% endblock %}
 
 {% block content %}
   <div class="fixed inset-0 flex flex-col justify-center items-center">
@@ -10,18 +10,18 @@
       <span x-data="{message:'🤖 Hello World 🤓'}" x-text="message"></span>
     </div>
     <div>
-      <button class="border-2 border-red-500 rounded-lg hover:text-white hover:bg-red-500">Log In</button>
-      <button class="border-2 border-red-500 rounded-lg hover:text-white hover:bg-red-500">Sign Up</button>
+      <button id="left" class="border-2 border-red-500 rounded-lg hover:text-white hover:bg-red-500">Log In</button>
+      <button id="right" class="border-2 border-red-500 rounded-lg hover:text-white hover:bg-red-500">Sign Up</button>
     </div>
 
     <div>
       <div >
         <p class="text-red-500 font-semibold">Free Content</p>
-        <p>The first three chapters can be accessed&nbsp;<a href="" class="hover:text-white hover:bg-red-500">here</a></p>
+        <p>The first three chapters can be accessed&nbsp;<a href="" class="text-red-500 underline hover:text-white hover:bg-red-500">here</a></p>
       </div>
       <div>
         <p class="text-red-500 font-semibold">Pro Content</p>
-        <p>The remainder of the saga can be accessed&nbsp;<a href="" class="hover:text-white hover:bg-red-500">here</a>with a paid subscription.</p>
+        <p>The remainder of the saga can be accessed&nbsp;<a href="" class="text-red-500 underline hover:text-white hover:bg-red-500">here</a>&nbsp;with a paid subscription.</p>
       </div>
   </div>
 
@@ -40,6 +40,40 @@
   // by default, add login and signup functionality
   button1.addEventListener('click', login);
   button2.addEventListener('click', signup);
+
+  const updateUserInfo = (user) => {
+    const container = document.querySelector('.user-info');
+    // cloning the buttons removes existing event listeners
+    const b1 = button1.cloneNode(true);
+    const b2 = button2.cloneNode(true);
+    // empty the user info div
+    container.innerHTML = '';
+    if (user) {
+      b1.innerText = 'Log Out';
+      b1.addEventListener('click', () => {
+        netlifyIdentity.logout();
+      });
+      b2.innerText = 'Manage Subscription';
+      b2.addEventListener('click', () => {
+        // TODO handle subscription management
+      });
+    } else {
+      // if no one is logged in, show login/signup options
+      b1.innerText = 'Log In';
+      b1.addEventListener('click', login);
+      b2.innerText = 'Sign Up';
+      b2.addEventListener('click', signup);
+    }
+    // add the updated buttons back to the user info div
+    container.appendChild(b1);
+    container.appendChild(b2);
+  };
+  const handleUserStateChange = (user) => {
+    updateUserInfo(user);
+  };
+  netlifyIdentity.on('init', handleUserStateChange);
+  netlifyIdentity.on('login', handleUserStateChange);
+  netlifyIdentity.on('logout', handleUserStateChange);
 </script>
 
 {% endblock %}
